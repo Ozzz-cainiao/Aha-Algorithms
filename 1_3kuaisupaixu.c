@@ -3,7 +3,7 @@
 int a[100];
 void quicksort(int initnum, int len)
 {
-    if (len > initnum)
+    if (len < initnum)
         return;
 
     int temp;
@@ -44,7 +44,7 @@ int main()
     {
         scanf("%d", &a[i]);
     }
-    quicksort(1, len);
+    quicksort(0, len - 1);
     // output
     for (int i = 0; i < len; i++)
     {
