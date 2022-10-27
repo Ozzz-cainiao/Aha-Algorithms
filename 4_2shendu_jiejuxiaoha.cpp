@@ -1,4 +1,5 @@
 //解救小哈  深度优先搜索算法
+//先往深度走 走不通就退回来走另一条路  通过递归实现
 #include <iostream>
 
 using namespace std;
