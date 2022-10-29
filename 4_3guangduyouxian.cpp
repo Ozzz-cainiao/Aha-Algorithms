@@ -17,14 +17,11 @@ int main()
     struct note que[2501]; //队列的扩展
     int map[51][51] = {0};
     int book[51][51] = {0};
-
     //定义一个表示探索方向的数组
     int next[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-
     //定义队列头尾的位置；
     int head, tail;
-
-    //
+    //地图的长度
     int lenx, leny;
 
     cout << "please input lenx and leny" << endl;
@@ -62,16 +59,40 @@ int main()
     //队列不为空时进行循环
     while (head < tail)
     {
-        //向4个方向探索
+        //从当前位置向4个方向探索
         for (int i = 0; i < 4; i++)
         {
             //计算下一个点的坐标
             x = que[head].x + next[i][0];
             y = que[head].y + next[i][1];
             //判断是否越界
+            if (x >= lenx || x < 0 || y < 0 || y >= leny)
+                continue;
+            //判断是否是障碍物或者已经在路径中
+            if (map[x][y] == 0 && book[x][y] == 0)
+            {
+                book[x][y] = 1;
+                //将这个点入队
+                que[tail].x = x;
+                que[tail].y = y;
+                que[tail].step =que[head].step+1;//当前的步数是父节点步数+1
+                que[tail].f = head; //因为这个点是从Head扩展出来的，所以它的父亲是head
+                tail++;
+            }
+            if (x == B_pos[0] && y == B_pos[1])
+            {
+                //到达目标点了
+                flag = true;
+                break;
+            }
         }
+        if (flag == true)
+        {
+            break;
+        }
+        head++;//这个父节点向4个方向遍历完就移到下一个节点 作为新的父节点进行4个方向的遍历
     }
-
+    cout << "最短的步数为："<<que[tail - 1].step<<endl;
     system("pause");
     return 0;
 }
